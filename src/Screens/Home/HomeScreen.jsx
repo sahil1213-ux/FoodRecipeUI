@@ -19,29 +19,12 @@ export default function HomeScreen() {
   const [categories, setCategories] = useState([]);
   const [meals, setMeals] = useState([]);
 
-  const [searchedText, setSearchedText] = useState('');
-  const [searcheMeal, setSearchMeal] = useState([]);
-
   const navigation = useNavigation();
 
   useEffect(() => {
     getCategories();
     getRecipes();
   }, []);
-
-  useEffect(() => {
-    if (searchedText === '') return;
-    axios
-      .get(
-        `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchedText}`,
-      )
-      .then(res => {
-        setSearchMeal(res.data.meals);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, [searchedText]);
 
   const handleChangeCategory = category => {
     setActiveCategory(category);
@@ -115,10 +98,7 @@ export default function HomeScreen() {
         </View>
         {/* recipes */}
         <View>
-          <Recipes
-            categories={categories}
-            meals={searchedText !== '' ? searcheMeal : meals}
-          />
+          <Recipes categories={categories} meals={meals} />
         </View>
       </ScrollView>
     </View>
