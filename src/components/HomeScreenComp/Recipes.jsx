@@ -9,18 +9,12 @@ import Animated, {FadeInDown} from 'react-native-reanimated';
 import {Loading} from '../commonComp/Common';
 import {CachedImage} from '../../helpers/cachedImage';
 import FastImage from 'react-native-fast-image';
-// import {navigation} from '../../services/RecipeServices';
 
 export default function Recipes({categories, meals}) {
   const navigation = useNavigation();
   console.log(meals);
   return (
-    <View className="space-y-2 ">
-      <Text
-        style={{fontSize: hp(3)}}
-        className="font-semibold text-neutral-600">
-        Recipes
-      </Text>
+    <View className="space-y-2 mt-1 px-2 ">
       {/* load the list only when meals and categories are fetched */}
       {categories.length > 0 || meals.length > 0 ? (
         <FlatList

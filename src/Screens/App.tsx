@@ -44,19 +44,11 @@ npm install react-native-fast-image
 
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {Text} from 'react-native';
 import AuthNav from '../navigation/AuthNav';
-import {MMKV} from 'react-native-mmkv';
-export const storage = new MMKV({
-  id: `user-${1}-storage`,
-  // path: `${}/storage`,
-  encryptionKey: 'hunter85',
-});
-export default function App() {
+export function App() {
   return (
     <NavigationContainer>
       <AuthNav />
-      {/* <Text>Hello</Text> */}
     </NavigationContainer>
   );
 }

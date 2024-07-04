@@ -22,7 +22,13 @@ export default function AuthNav() {
         component={FavouriteScreen}
         options={{headerShown: true}}
       />
-      <Stack.Screen name="Search" component={SearchScreen} />
+      <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          headerShown: true,
+        }}
+      />
     </Stack.Navigator>
   );
 }

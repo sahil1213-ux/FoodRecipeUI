@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Animated, {FadeIn, FadeInDown} from 'react-native-reanimated';
-import {CatchedImage} from '../../helpers/cachedImage';
 import {
   ArrowUturnLeftIcon,
   HeartIcon,
@@ -16,10 +15,9 @@ import {
   UserIcon,
 } from 'react-native-heroicons/outline';
 
-import {GetIngredients} from '../../services/RecipeServices';
 import YoutubeIframe from 'react-native-youtube-iframe';
 import FastImage from 'react-native-fast-image';
-import {storage} from '../../Screens/App';
+import {storage} from '../../services/storage';
 
 export const RecipeImage = ({idMeal, strMealThumb}) => (
   <Animated.View
@@ -49,9 +47,7 @@ export const RecipeImage = ({idMeal, strMealThumb}) => (
         // marginTop: 4,
         paddinghorizontal: 4,
       }}
-      // s={`${idMeal}-image`} // Add this line,
       className="w-full"
-      // resizeMode="contain"
     />
   </Animated.View>
 );
@@ -82,26 +78,38 @@ export const HeaderComponent = ({navigation, fav, setFav, item}) => (
 );
 
 const updateFavorites = async (fav, item, setFav) => {
-  let favorites = [];
-  // Retrieve the current list of favorites
-  const favoritesString = storage.getString('favorites');
-  if (favoritesString) {
-    favorites = JSON.parse(favoritesString);
+  try {
+    // Retrieve the current list of favorites
+    const favoritesString = storage.getString('favorites');
+    let favorites = [];
+    if (favoritesString) {
+      console.log('favoritesString:', favoritesString);
+      try {
+        favorites = JSON.parse(favoritesString);
+      } catch (parseError) {
+        console.error('Error parsing favorites JSON:', parseError);
+        // Handle the parse error appropriately, e.g., by initializing favorites to an empty array or showing an error message to the user
+        favorites = []; // Reset favorites or take other corrective action
+      }
+    }
+
+    if (fav) {
+      // Remove item from favorites
+      favorites = favorites.filter(favorite => favorite.idMeal !== item.idMeal);
+    } else {
+      // Add item to favorites
+      favorites.push(item);
+    }
+
+    // Update the favorites in state
+    await setFav(!fav);
+
+    // Save the updated list of favorites
+    storage.set('favorites', JSON.stringify(favorites));
+  } catch (error) {
+    console.error('Failed to update favorites:', error);
+    // Handle the error appropriately
   }
-
-  if (fav) {
-    // Remove item from favorites
-    favorites = favorites.filter(favorite => favorite.idMeal !== idMeal);
-  } else {
-    // Add item to favorites
-    favorites.push(item);
-  }
-
-  // Update the favorites in state
-  await setFav(!fav);
-
-  // Save the updated list of favorites
-  storage.set('favorites', JSON.stringify(favorites));
 };
 
 export const NameAndArea = ({strMeal, strArea}) => (

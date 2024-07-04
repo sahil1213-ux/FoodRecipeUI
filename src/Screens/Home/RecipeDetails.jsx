@@ -20,6 +20,7 @@ import {
   RecipeImage,
   YoututeVideo,
 } from '../../components/RecipeDetailsComp/RecipeDetailsUsedComp';
+import {storage} from '../../services/storage';
 
 export default function RecipeDetails(props) {
   const [fav, setFav] = useState(false); // Assuming you have a state for meals initialized to an empty array or similar
@@ -29,11 +30,34 @@ export default function RecipeDetails(props) {
   const [ingredieants, setIngredients] = useState(undefined);
 
   const id = props.route.params.idMeal;
+
+  const getFav = async () => {
+    try {
+      let favorites = [];
+      const favouritesString = storage.getString('favorites');
+      if (favouritesString) {
+        favorites = JSON.parse(favouritesString);
+        favorites = favorites.filter(item => item.idMeal === id);
+        if (favorites.length > 0) {
+          // Check if the filtered array has any items
+          setFav(true);
+        } else {
+          setFav(false); // Set to false if the item is not found in favorites
+        }
+      } else {
+        setFav(false); // Set to false if there are no favorites saved
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     console.log('id', id);
     if (id) {
       GetRecipesDetails(setLoading, setMeals, id);
     }
+    getFav();
   }, []);
 
   // Add this useEffect
@@ -127,7 +151,7 @@ export default function RecipeDetails(props) {
             <HeadingText text={'Ingredients'} className />
           </View>
           {ingredieants.map((item, index) => (
-            <View className="flex-row space-x-1 items-center">
+            <View key={index} className="flex-row space-x-1 items-center">
               <View className="rounded-full bg-amber-300 p-1.5" />
               <View className="flex-row space-x-1">
                 <View>

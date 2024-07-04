@@ -18,7 +18,6 @@ export default function Categories({
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        className="space-x-3"
         contentContainerStyle={{paddingHorizontal: hp(2)}}
         // pagingEnabled={true}
         // pinchGestureEnabled={true}
@@ -47,21 +46,23 @@ const CategoryCard = ({category, isActive, handleChangeCategory}) => {
   let activeBtnClass = isActive ? ' bg-amber-400' : ' bg-black/10';
   return (
     <TouchableOpacity
-      className="flex items-center mt-2"
+      className="flex mr-2 items-center mt-2"
       onPress={() => handleChangeCategory(category.strCategory)}>
       <View className={'rounded-full p-[6px]' + activeBtnClass}>
-        {/* <CachedImage
-          uri={category.strCategoryThumb}
-          style={{height: hp(6), width: hp(6)}}
-          className="rounded-full"
-        /> */}
         <FastImage
           source={{uri: category.strCategoryThumb}}
           style={{height: hp(6), width: hp(6)}}
           className="rounded-full"
         />
       </View>
-      <NormalText text={`${category.strCategory}`} size={hp(2)} />
+      <NormalText
+        text={
+          category.strCategory.length > 7
+            ? category.strCategory.substring(0, 7) + '...'
+            : category.strCategory
+        }
+        size={hp(2)}
+      />
     </TouchableOpacity>
   );
 };

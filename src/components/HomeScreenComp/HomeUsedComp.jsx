@@ -1,20 +1,23 @@
-import {View, Image, Text, TextInput, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {
+  View,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import {BellIcon, HeartIcon} from 'react-native-heroicons/outline';
+import {HeartIcon} from 'react-native-heroicons/outline';
 import {MagnifyingGlassIcon} from 'react-native-heroicons/solid';
-import {storage} from '../../Screens/App';
 import {NormalText} from '../commonComp/Common';
-xfgdfg;
 
 export const HeaderComponent = ({navigation}) => (
   <View
-    className="space-y-2 flex-row justify-between items-center "
-    http:style={{
-      //github.com/sahil1213-ux
+    className="flex-row justify-between items-center mx-2"
+    style={{
       marginHorizontal: wp(1.5),
     }}>
     <Image
@@ -26,52 +29,49 @@ export const HeaderComponent = ({navigation}) => (
         borderRadius: 25,
       }}
     />
-    <TouchableOpacity
-      onPress={() => navigation.push('Favourite', {navigation})}>
+    <TouchableOpacity onPress={() => navigation.push('Favourite')}>
       <HeartIcon size={hp(5.5)} color="grey" />
-      <View
-        style={{
-          position: 'absolute',
-          top: -5,
-          right: -5,
-          backgroundColor: 'red',
-          width: 20,
-          height: 20,
-          borderRadius: 10,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Text style={{color: 'white', fontSize: 10}}>{getFavCount()}</Text>
-      </View>
     </TouchableOpacity>
   </View>
 );
-const getFavCount = () => {
-  let favorites = [];
-  const favouritesString = storage.get('favorites');
-  if (favouritesString) {
-    favorites = JSON.parse(favouritesString);
-  }
-  return favorites.length;
-};
 
-export const SearchComponent = ({searchedText, setSearchedText}) => (
+export const SpecialSearchComponent = ({navigation}) => (
+  <Pressable
+    onPress={() => navigation.push('Search')}
+    className="mx-3 space-y-1 flex-row justify-between items-center rounded-full bg-black/5 p-[4px]">
+    <Text
+      className="flex-1 tracking-wider text-gray-600 my-2 ml-2"
+      style={{fontSize: hp(1.7)}}>
+      Search Any recipe
+    </Text>
+    <View className="bg-white rounded-full p-4">
+      <MagnifyingGlassIcon size={hp(2.5)} color="gray" strokeWidth={3} />
+    </View>
+  </Pressable>
+);
+
+export const SearchComponent = ({searchedText, setSearchedText, searchRef}) => (
   <View className="mx-3 flex-row items-center rounded-full bg-black/5 p-[4px]">
     <TextInput
       placeholder="Search Any recipe"
       placeholderTextColor={'gray'}
       value={searchedText}
       onChangeText={text => setSearchedText(text)}
-      style={{fontSize: hp(1.7), padding: hp(1)}}
+      ref={searchRef}
+      style={{fontSize: hp(2), padding: hp(1)}}
       className="flex-1 mb-1 tracking-wider"
     />
     {searchedText.length > 0 && (
-      <TouchableOpacity onPress={() => setSearchedText('')}>
-        <NormalText text="X" size={hp(2)} />
-      </TouchableOpacity>
+      <Text
+        className="text-gray-600 mr-2.5"
+        style={{fontSize: hp(2.5)}}
+        onPress={() => setSearchedText('')}>
+        X
+      </Text>
     )}
+
     <View className="bg-white rounded-full p-3">
-      <MagnifyingGlassIcon size={hp(2.5)} color="gray" strokeWidth={3} />
+      <MagnifyingGlassIcon size={hp(2.8)} color="gray" strokeWidth={3} />
     </View>
   </View>
 );

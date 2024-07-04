@@ -1,5 +1,5 @@
-import {View, Text, SafeAreaView} from 'react-native';
-import React from 'react';
+import {View, SafeAreaView, Text, ScrollView} from 'react-native';
+import React, {useRef, useEffect, useState} from 'react';
 import {CustomStatusBar, Loading} from '../../components/commonComp/Common';
 import {SearchComponent} from '../../components/HomeScreenComp/HomeUsedComp';
 import Recipes from '../../components/HomeScreenComp/Recipes';
@@ -7,6 +7,7 @@ import Recipes from '../../components/HomeScreenComp/Recipes';
 export default function SearchScreen() {
   const [searchedText, setSearchedText] = useState('');
   const [meals, setMeals] = useState([]);
+  const searchRef = useRef(null);
 
   useEffect(() => {
     if (searchedText.length > 0) {
@@ -16,6 +17,12 @@ export default function SearchScreen() {
       setMeals([]);
     }
   }, [searchedText]);
+
+  useEffect(() => {
+    if (searchRef.current && typeof searchRef.current.focus === 'function') {
+      searchRef.current.focus();
+    }
+  }, []);
 
   const getProductsList = async () => {
     try {
@@ -36,18 +43,35 @@ export default function SearchScreen() {
 
   return (
     <View className="flex-1">
-      <SafeAreaView>
+      <SafeAreaView className="space-y-2 mt-3">
         <CustomStatusBar />
         <SearchComponent
           searchedText={searchedText}
           setSearchedText={setSearchedText}
         />
-        {/* Here categories is used for demo not neccessary needed to be added */}
-        {meals.length > 0 ? (
-          <Recipes categories={[]} meals={meals} />
-        ) : (
-          <Loading size="large" className="mt-20" />
-        )}
+        <ScrollView showsVerticalScrollIndicator={false} bounces>
+          {/* Here categories is used for demo not neccessary needed to be added */}
+          {searchedText.length > 0 ? (
+            meals.length > 0 ? (
+              <View>
+                <Text className="font-semibold text-neutral-700 mb-2 px-3 text-xl">
+                  Recipes
+                </Text>
+                <Recipes categories={['123']} meals={meals} />
+              </View>
+            ) : (
+              meals.length === 0 && (
+                <View className="flex-1 ustify-center items-center">
+                  <Text>No data found</Text>
+                </View>
+              )
+            )
+          ) : (
+            <View className="flex-row justify-center items-center">
+              <Text className=" text-gray-700">Search Something Now</Text>
+            </View>
+          )}
+        </ScrollView>
       </SafeAreaView>
     </View>
   );

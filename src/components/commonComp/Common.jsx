@@ -40,8 +40,12 @@ export function CustomStatusBar({backgroundColor, ...props}) {
 export function NormalText({text, size = hp(3)}, onPress, props) {
   return (
     <Text
-      className="font-semibold text-neutral-600"
-      style={{fontSize: size, fontFamily: 'Roboto-Regular', ...props}}
+      {...(props ? props : (className = 'font-semibold text-neutral-600'))}
+      style={{
+        fontSize: size,
+        fontFamily: 'Roboto-Regular',
+        // paddingHorizontal: hp(2),
+      }}
       onPress={onPress ? onPress : null}>
       {text}
     </Text>
@@ -53,7 +57,7 @@ export function HeadingText({text}) {
     <View>
       <Text
         className="font-semibold text-neutral-600"
-        style={{fontSize: hp(4), fontFamily: 'Roboto-Bold'}}>
+        style={{fontSize: hp(3.5), fontFamily: 'Roboto-Bold'}}>
         {text}
       </Text>
     </View>

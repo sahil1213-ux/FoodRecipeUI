@@ -1,13 +1,13 @@
-import {View, ScrollView, Pressable} from 'react-native';
+import {View, ScrollView, Pressable, Button, Text} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {HeadingText} from '../../components/commonComp/Common';
+import {HeadingText, NormalText} from '../../components/commonComp/Common';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 import Recipes from '../../components/HomeScreenComp/Recipes';
 import {CustomStatusBar} from '../../components/commonComp/Common';
 import {
   HeaderComponent,
-  SearchComponent,
+  SpecialSearchComponent,
   SpecialText,
 } from '../../components/HomeScreenComp/HomeUsedComp';
 import Categories from '../../components/HomeScreenComp/Categories';
@@ -80,12 +80,8 @@ export default function HomeScreen() {
         </View>
 
         {/* Search Bar */}
-        <Pressable onPress={() => navigation.push('Search')}>
-          <SearchComponent
-            searchedText={searchedText}
-            setSearchedText={setSearchedText}
-          />
-        </Pressable>
+
+        <SpecialSearchComponent navigation={navigation} />
         {/* categories */}
         {/* here we have to render categories only when we get info from api so than animation can be seen */}
         <View>
@@ -99,6 +95,14 @@ export default function HomeScreen() {
         </View>
         {/* recipes */}
         <View>
+          {/* <NormalText
+            size={hp(3)}
+            className="font-bold text-neutral-800 mb-4 px-3"
+            text="Recipes"
+          /> */}
+          <Text className="font-semibold text-neutral-700 mb-2 px-3 text-xl">
+            Recipes
+          </Text>
           <Recipes categories={categories} meals={meals} />
         </View>
       </ScrollView>
