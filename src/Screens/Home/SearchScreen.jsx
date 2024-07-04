@@ -2,7 +2,6 @@ import {View, Text, SafeAreaView} from 'react-native';
 import React from 'react';
 import {CustomStatusBar, Loading} from '../../components/commonComp/Common';
 import {SearchComponent} from '../../components/HomeScreenComp/HomeUsedComp';
-import {FlatList} from 'react-native-reanimated/lib/typescript/Animated';
 import Recipes from '../../components/HomeScreenComp/Recipes';
 
 export default function SearchScreen() {
