@@ -33,13 +33,11 @@
 //     getCachedImage();
 //   }, []);
 
-//   return <Animated.Image {...props} source={cachedSource} />;
+//   return <Animated.Image {...props} xcxcsource={cachedSource} />;
 // };
 import React, {useEffect, useState} from 'react';
 import Animated from 'react-native-reanimated';
 import {storage} from '../Screens/App';
-// import {MMKV} from '@react-native-mmkv';
-storage;
 
 export const CachedImage = props => {
   const [cachedSource, setCachedSource] = useState(null);

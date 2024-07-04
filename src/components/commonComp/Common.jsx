@@ -37,12 +37,12 @@ export function CustomStatusBar({backgroundColor, ...props}) {
   );
 }
 
-export function NormalText({text, size = hp(3)}, props) {
+export function NormalText({text, size = hp(3)}, onPress, props) {
   return (
     <Text
       className="font-semibold text-neutral-600"
-      style={{fontSize: size, fontFamily: 'Roboto-Regular'}}
-      {...props}>
+      style={{fontSize: size, fontFamily: 'Roboto-Regular', ...props}}
+      onPress={onPress ? onPress : null}>
       {text}
     </Text>
   );

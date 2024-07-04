@@ -1,4 +1,4 @@
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, Pressable} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {HeadingText} from '../../components/commonComp/Common';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -75,16 +75,17 @@ export default function HomeScreen() {
         {/* bell Icon */}
         <HeaderComponent navigation={navigation} />
         <View className="mx-2 space-y-2 mb-2">
-          {/* <NormalText text={'Hell0 , Sahil'} /> */}
           <HeadingText text={'What do you want to cook today?'} />
           <SpecialText specialTxt={'Stay at'} finalText={'home'} />
         </View>
 
         {/* Search Bar */}
-        <SearchComponent
-          searchedText={searchedText}
-          setSearchedText={setSearchedText}
-        />
+        <Pressable onPress={() => navigation.push('Search')}>
+          <SearchComponent
+            searchedText={searchedText}
+            setSearchedText={setSearchedText}
+          />
+        </Pressable>
         {/* categories */}
         {/* here we have to render categories only when we get info from api so than animation can be seen */}
         <View>

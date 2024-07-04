@@ -1,6 +1,7 @@
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import React, {useEffect} from 'react';
 import {storage} from '../App';
+import {NormalText} from '../../components/commonComp/Common';
 
 export default function FavouriteScreen(props) {
   const {navigation} = props.route.params;
@@ -33,9 +34,29 @@ export default function FavouriteScreen(props) {
 const renderItem = ({item, navigation}) => {
   return (
     <TouchableOpacity
-      className="h-4, w-full mx-2 border-black my-2"
+      className="h-4, w-full mx-2 border-black my-2 flex-row justify-between items-center"
       onPress={() => navigation.push('RecipeDetails', ...item)}>
       <Text className="text-gray-600 text-lg pl-2">{item.strMeal}</Text>
+      <NormalText text={item.idMeal} size={17} />
+      <Text className="text-gray-600 text-lg pr-2">R</Text>
+      <NormalText
+        text="remove"
+        color="red"
+        size={17}
+        onPress={() => removeItem(item)}
+      />
     </TouchableOpacity>
   );
+};
+
+const removeItem = item => {
+  let favourites = [];
+  const favouritesString = storage.get('favorites');
+  if (favouritesString) {
+    favourites = JSON.parse(favouritesString);
+  }
+  const newFavourites = favourites.filter(
+    favourite => favourite.idMeal !== item.idMeal,
+  );
+  storage.set('favorites', JSON.stringify(newFavourites));
 };

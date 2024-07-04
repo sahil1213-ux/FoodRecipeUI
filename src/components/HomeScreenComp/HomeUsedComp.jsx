@@ -7,12 +7,14 @@ import {
 import {BellIcon, HeartIcon} from 'react-native-heroicons/outline';
 import {MagnifyingGlassIcon} from 'react-native-heroicons/solid';
 import {storage} from '../../Screens/App';
+import {NormalText} from '../commonComp/Common';
 xfgdfg;
 
 export const HeaderComponent = ({navigation}) => (
   <View
     className="space-y-2 flex-row justify-between items-center "
-    http:style={{ //github.com/sahil1213-ux
+    http:style={{
+      //github.com/sahil1213-ux
       marginHorizontal: wp(1.5),
     }}>
     <Image
@@ -63,6 +65,11 @@ export const SearchComponent = ({searchedText, setSearchedText}) => (
       style={{fontSize: hp(1.7), padding: hp(1)}}
       className="flex-1 mb-1 tracking-wider"
     />
+    {searchedText.length > 0 && (
+      <TouchableOpacity onPress={() => setSearchedText('')}>
+        <NormalText text="X" size={hp(2)} />
+      </TouchableOpacity>
+    )}
     <View className="bg-white rounded-full p-3">
       <MagnifyingGlassIcon size={hp(2.5)} color="gray" strokeWidth={3} />
     </View>

@@ -66,18 +66,6 @@ const RecipeCard = ({item, index, navigation}) => {
         }}
         className="flex justify-center mb-3 space-y-1 "
         onPress={() => navigation.push('RecipeDetails', {...item})}>
-        {/* <CachedImage
-          uri={item.strMealThumb}
-          style={{
-            height: index % 3 == 0 ? hp(25) : hp(35),
-            borderRadius: 35,
-            width: hp(25),
-
-            // animation: 'fadeIn',
-          }}
-          sharedTransitionTag={`${idMeal}-image`} // Add this line,
-          // className="bg-black/5"
-        /> */}
         <FastImage
           source={{uri: item.strMealThumb}}
           style={{

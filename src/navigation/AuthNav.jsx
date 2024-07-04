@@ -5,6 +5,7 @@ import WelcomeScreen from '../Screens/Auth/WelcomeScreen';
 import HomeScreen from '../Screens/Home/HomeScreen';
 import RecipeDetails from '../Screens/Home/RecipeDetails';
 import FavouriteScreen from '../Screens/Home/FavouriteScreen';
+import SearchScreen from '../Screens/Home/SearchScreen';
 
 export default function AuthNav() {
   const Stack = createNativeStackNavigator();
@@ -16,7 +17,12 @@ export default function AuthNav() {
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="RecipeDetails" component={RecipeDetails} />
-      <Stack.Screen name="Favourite" component={FavouriteScreen} />
+      <Stack.Screen
+        name="Favourite"
+        component={FavouriteScreen}
+        options={{headerShown: true}}
+      />
+      <Stack.Screen name="Search" component={SearchScreen} />
     </Stack.Navigator>
   );
 }
